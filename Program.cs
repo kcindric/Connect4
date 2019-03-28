@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,29 +18,35 @@ namespace Cheese
             IsWinner isWinner = new IsWinner();
 
             string[,] boardArr = new string[6, 9];
-            bool gameEnd = true;
+            bool gameContinue = true;
 
             do
             {
-                //1st player turn
+                //1st player turn (X)
+                //choose your column
                 board.DisplayBoard(boardArr);
                 Console.WriteLine("Choose a column from 1 to 7:");
                 int choice = int.Parse(Console.ReadLine());
 
+                //if your choice is out of the column range repeat
                 while (choice < 1 || choice > 7)
                 {
                     Console.WriteLine("Choose a column from 1 to 7:");
                     choice = Convert.ToInt32(Console.ReadLine());
                 }
+                //checks if the bottom row of the column taken
+                //if it is, it moves the X to the next free row of the chosen column
                 fieldCheck.Check(boardArr, choice, playerOneSign);
                 Console.Clear();
-                isWinner.WinnerCheck(boardArr, gameEnd, playerOneSign);
-                if (gameEnd == false)
-                {
-                    Console.WriteLine("gameEnd is false");
-                }
 
-                //2nd player turn
+                //checks if there is a winning combination
+                //for now it only checks horizontal combinations
+                if(isWinner.WinnerCheck(boardArr, playerOneSign))
+                {
+                    gameContinue = false;
+                }
+                
+                //2nd player turn (O)
                 board.DisplayBoard(boardArr);
                 Console.WriteLine("Choose a column from 1 to 7:");
                 choice = int.Parse(Console.ReadLine());
@@ -52,9 +58,12 @@ namespace Cheese
                 }
                 fieldCheck.Check(boardArr, choice, playerTwoSign);
                 Console.Clear();
-                isWinner.WinnerCheck(boardArr, gameEnd, playerTwoSign);
+                if (isWinner.WinnerCheck(boardArr, playerTwoSign))
+                {
+                    gameContinue = false;
+                }
 
-            } while (gameEnd);
+            } while (gameContinue);
 
             Console.WriteLine("The game has ended!");
         }
