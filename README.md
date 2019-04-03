@@ -1,6 +1,6 @@
 # Connect4
 
-A glorified version of tic-tac-toe in C#
+A glorified version of tic-tac-toe as a C# console app
 
 To do list:
 - add an blocker so an user can't add X or O verticaly if the column is full
