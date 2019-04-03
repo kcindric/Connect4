@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cheese
 {
     class Program
     {
-        
+
         static void Main()
         {
             string playerOneSign = "X";
@@ -22,50 +18,64 @@ namespace Cheese
 
             do
             {
-                //1st player turn (X)
-                //choose your column
-                board.DisplayBoard(boardArr);
-                Console.WriteLine("Choose a column from 1 to 7:");
-                int choice = int.Parse(Console.ReadLine());
-
-                //if your choice is out of the column range repeat
-                while (choice < 1 || choice > 7)
+                if (gameContinue)
                 {
+                    //1st player turn (X)
+                    //choose your column
+                    board.DisplayBoard(boardArr);
+                    Console.WriteLine("Player X's turn");
                     Console.WriteLine("Choose a column from 1 to 7:");
-                    choice = Convert.ToInt32(Console.ReadLine());
+                    int choice = int.Parse(Console.ReadLine());
+
+                    //if your choice is out of the column range repeat
+                    while (choice < 1 || choice > 7)
+                    {
+                        Console.WriteLine("Player X's turn");
+                        Console.WriteLine("Choose a column from 1 to 7:");
+                        choice = Convert.ToInt32(Console.ReadLine());
+                    }
+                    //checks if the bottom row of the column taken
+                    //if it is, it moves the X to the next free row of the chosen column
+                    fieldCheck.Check(boardArr, choice, playerOneSign);
+                    Console.Clear();
                 }
-                //checks if the bottom row of the column taken
-                //if it is, it moves the X to the next free row of the chosen column
-                fieldCheck.Check(boardArr, choice, playerOneSign);
-                Console.Clear();
 
                 //checks if there is a winning combination
-                //for now it only checks horizontal combinations
-                if(isWinner.WinnerCheck(boardArr, playerOneSign))
+                if (isWinner.WinnerCheck(boardArr, playerOneSign))
                 {
+                    Console.WriteLine("\n");
+                    board.DisplayBoard(boardArr);
                     gameContinue = false;
                 }
-                
-                //2nd player turn (O)
-                board.DisplayBoard(boardArr);
-                Console.WriteLine("Choose a column from 1 to 7:");
-                choice = int.Parse(Console.ReadLine());
 
-                while (choice < 1 || choice > 7)
+                if (gameContinue)
                 {
+                    //2nd player turn (O)
+                    board.DisplayBoard(boardArr);
+                    Console.WriteLine("Player O's turn");
                     Console.WriteLine("Choose a column from 1 to 7:");
-                    choice = Convert.ToInt32(Console.ReadLine());
-                }
-                fieldCheck.Check(boardArr, choice, playerTwoSign);
-                Console.Clear();
-                if (isWinner.WinnerCheck(boardArr, playerTwoSign))
-                {
-                    gameContinue = false;
+                    int choice = int.Parse(Console.ReadLine());
+
+                    while (choice < 1 || choice > 7)
+                    {
+                        Console.WriteLine("Player O's turn");
+                        Console.WriteLine("Choose a column from 1 to 7:");
+                        choice = Convert.ToInt32(Console.ReadLine());
+                    }
+
+                    fieldCheck.Check(boardArr, choice, playerTwoSign);
+                    Console.Clear();
+                    if (isWinner.WinnerCheck(boardArr, playerTwoSign))
+                    {
+                        Console.WriteLine("\n");
+                        board.DisplayBoard(boardArr);
+                        gameContinue = false;
+                    }
                 }
 
             } while (gameContinue);
 
-            Console.WriteLine("The game has ended!");
+            Console.ReadLine();
         }
 
     }
