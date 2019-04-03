@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,7 @@ namespace Cheese
         {
             int rows = 6;
             int col = 7;
-
+            Console.WriteLine(" 1234567 ");
             for (int i = 0; i < rows; i++)
             {
                 Console.Write("|");
@@ -26,6 +26,8 @@ namespace Cheese
                 Console.Write("| \n");
 
             }
+            Console.WriteLine(" 1234567 ");
+            Console.WriteLine("\n");
         }
     }
 }
