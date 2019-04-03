@@ -10,7 +10,8 @@ namespace Cheese
     {
         bool gameEnd = false;
 
-        //checks
+        //checks is there a winning combination
+        //a lot of dirty code, could use a rework
         public bool WinnerCheck(string[,] board, string playerSign)
         {
             //horizontal check
@@ -20,8 +21,7 @@ namespace Cheese
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < col; j++)
-                {
-                    //it checks columns 
+                { 
                     if (board[i, j] == playerSign && board[i, j + 1] == playerSign && board[i, j + 2] == playerSign && board[i, j + 3] == playerSign)
                     {
                         Console.WriteLine($"Winner {playerSign}!");
@@ -30,7 +30,6 @@ namespace Cheese
                     }
                 }
             }
-
 
             //vertical check
             //int rows and col are different because there are no additional "|" signs as in the horizontal check
@@ -53,21 +52,15 @@ namespace Cheese
 
             //diagonal check
             #region diagonal check L to R
-            
-            
 
             for(int i = 3; i < 6; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    //don't know should I put it in our outside with the int loop?
-                    //IT WORKS!
-                    //test every possible outcome
                     int innerLoop = 0;
                     int loop = 0;
                     do
                     {
-                        //index outside of the array
                         if (board[i-loop, j+loop] == playerSign && board[i-1-loop, j+1+loop] == playerSign && board[i-2-loop, j+2+loop] == playerSign && board[i-3-loop, j+3+loop] == playerSign)
                         {
                             Console.WriteLine($"Winner {playerSign}!");
@@ -78,17 +71,31 @@ namespace Cheese
                     loop++;
                 }
             }
-           
+            #endregion
 
-            if (board[3,0] == playerSign && board[2,1] == playerSign && board[1,2] == playerSign && board[0,3] == playerSign )
+            #region diagonal check R to L
+
+            for (int i = 3; i < 6; i++)
             {
-                Console.WriteLine($"Winner {playerSign}!");
-                gameEnd = true;
+                for (int j = 3; j < 7; j++)
+                {
+                    int innerLoop = 0;
+                    int loop = 0;
+                    do
+                    {
+                        if (board[i - loop, j - loop] == playerSign && board[i - 1 - loop, j - 1 - loop] == playerSign && board[i - 2 - loop, j - 2 - loop] == playerSign && board[i - 3 - loop, j - 3 - loop] == playerSign)
+                        {
+                            Console.WriteLine($"Winner {playerSign}!");
+                            gameEnd = true;
+                        }
+                        innerLoop++;
+                    } while (innerLoop < loop);
+                    loop++;
+                }
             }
             #endregion
 
-
-
+            //returns a value based is there a winner or not
             if (gameEnd)
             {
                 return true;
