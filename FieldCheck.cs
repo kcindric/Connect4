@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cheese
 {
+    //checks if the bottom row of the chosen column is taken, if it is, it moves the X or O sign to the next available row 
     public class FieldCheck
     {
         public void Check(string[,] board, int choice, string sign)
